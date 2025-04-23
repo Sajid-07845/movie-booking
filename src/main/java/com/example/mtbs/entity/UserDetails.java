@@ -27,4 +27,5 @@ public class UserDetails
     private LocalDate dateOfBirth;
     private Long createdAt;
     private Long updatedAt;
+//    private boolean isDeleted
 }
