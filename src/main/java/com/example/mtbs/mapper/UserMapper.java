@@ -1,12 +1,26 @@
 package com.example.mtbs.mapper;
 
 import com.example.mtbs.dto.UserRegistrationRequset;
+import com.example.mtbs.dto.UserResponse;
 import com.example.mtbs.entity.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper
 {
+    public UserResponse toUserResponse(UserDetails userDetails)
+    {
+
+       return new UserResponse(
+        userDetails.getUsername(),
+        userDetails.getEmail(),
+        userDetails.getPhoneNumber(),
+        userDetails.getUserRole(),
+        userDetails.getDateOfBirth()
+        );
+
+    }
+
     public UserDetails toEntity(UserDetails user, UserRegistrationRequset source)
     {
         user.setUserRole(source.userRole());

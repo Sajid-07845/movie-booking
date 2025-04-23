@@ -1,6 +1,7 @@
 package com.example.mtbs.exception.handler;
 
 import com.example.mtbs.exception.UserExistByEmailException;
+import com.example.mtbs.exception.UserNotFoundException;
 import com.example.mtbs.utililty.ErrorStruture;
 import com.example.mtbs.utililty.RestErrorBuilder;
 import lombok.AllArgsConstructor;
@@ -20,5 +21,11 @@ public class UserExceptionHandler
     {
 
         return restErrorBuilder.failure(ex, HttpStatus.BAD_REQUEST,"user already exist");
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorStruture<String>> handleUserNotFoundException(UserNotFoundException ex)
+    {
+        return  restErrorBuilder.failure( ex,HttpStatus.BAD_REQUEST,"No User found" );
     }
 }

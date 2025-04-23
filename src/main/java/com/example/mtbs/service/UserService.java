@@ -1,10 +1,15 @@
 package com.example.mtbs.service;
 
 import com.example.mtbs.dto.UserRegistrationRequset;
-import com.example.mtbs.entity.UserDetails;
+import com.example.mtbs.dto.UserRequest;
+import com.example.mtbs.dto.UserResponse;
 
 public interface UserService
 {
 
-    UserDetails addUser(UserRegistrationRequset userRegistrationRequset);
+    UserResponse addUser(UserRegistrationRequset userRegistrationRequset);
+
+   UserRequest updateUserProfile(String email, UserRequest userRequest);
+
+
 }
