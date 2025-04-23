@@ -35,4 +35,11 @@ public class UserController
         UserRequest userDetails=userService.updateUserProfile( email, userRequest);
         return restResponseBuilder.success(HttpStatus.CREATED,"User Updated Successfully",userDetails);
     }
+
+//    @DeleteMapping("users/{email}")
+//    public ResponseEntity<ResponseStructure<UserResponse>> softDelete(@PathVariable String email)
+//    {
+//       UserResponse userResponse=userService.softDelete(email);
+//       return restResponseBuilder.success(HttpStatus.)
+//    }
 }
