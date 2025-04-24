@@ -32,4 +32,19 @@ public class UserMapper
 
         return  user;
     }
+
+    public UserResponse userDetailsResponseMapper(UserDetails user)
+    {
+        if(user==null)
+        {
+            return null;
+        }
+        return new UserResponse(
+            user.getUsername(),
+            user.getEmail(),
+            user.getPhoneNumber(),
+            user.getUserRole(),
+            user. getDateOfBirth()
+        );
+    }
 }
