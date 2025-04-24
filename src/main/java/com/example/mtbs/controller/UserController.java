@@ -43,3 +43,6 @@ public class UserController
        return restResponseBuilder.success(HttpStatus.OK,"User deleted succesfully",userResponse);
     }
 }
+
+}
+
