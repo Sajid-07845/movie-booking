@@ -14,6 +14,8 @@ import com.example.mtbs.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService
@@ -65,6 +67,31 @@ public class UserServiceImpl implements UserService
         userRepository.save(details);
 
         return userRequest;
+    }
+
+    @Override
+    public UserResponse softDelete(String email)
+    {
+//        boolean exists=userRepository.existsByEmail(email);
+//        if(exists)
+//        {
+//            UserDetails user=userRepository.findByEmail(email);
+//            user.setDeleted(true);
+//            user.setDeletedAt(Instant.now());
+//            userRepository.save(user);
+//            return userMapper.userDetailsResponseMapper(user);
+//        }
+//        throw new UserNotFoundException("No user Found with this email");
+
+        UserDetails user=userRepository.findByEmail(email);
+        if(user==null)
+        {
+            throw new UserNotFoundException("No user Found with this email");
+        }
+        user.setDeleted(true);
+        user.setDeletedAt(Instant.now());
+        userRepository.save(user);
+        return userMapper.userDetailsResponseMapper(user);
     }
 
 }

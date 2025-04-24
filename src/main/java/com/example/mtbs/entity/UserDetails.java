@@ -4,7 +4,10 @@ import com.example.mtbs.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,7 +28,13 @@ public class UserDetails
     private UserRole userRole;
     private String phoneNumber;
     private LocalDate dateOfBirth;
-    private Long createdAt;
-    private Long updatedAt;
-//    private boolean isDeleted
+
+    @CreatedDate
+    private Instant createdAt;
+    @LastModifiedDate
+    private Instant updatedAt;
+
+    private boolean isDeleted;
+    private Instant deletedAt;
+
 }
