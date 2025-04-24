@@ -47,7 +47,7 @@ public class FieldErrorException extends ResponseEntityExceptionHandler
 
     @Getter
     @Builder
-    public class CustomFieldError
+    public static class CustomFieldError
     {
         String field;
         String rejectedValue;
