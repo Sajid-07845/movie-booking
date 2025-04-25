@@ -1,6 +1,6 @@
 package com.example.mtbs.service.impl;
 
-import com.example.mtbs.dto.TheatorRegistrationRequest;
+import com.example.mtbs.dto.TheatorRequest;
 import com.example.mtbs.dto.TheatorResponse;
 import com.example.mtbs.entity.Theater;
 import com.example.mtbs.entity.TheaterOwner;
@@ -12,14 +12,9 @@ import com.example.mtbs.mapper.TheatorMapper;
 import com.example.mtbs.repository.TheatorRepository;
 import com.example.mtbs.repository.UserRepository;
 import com.example.mtbs.service.TheaterService;
-import com.example.mtbs.utililty.ResponseStructure;
-import com.example.mtbs.utililty.RestResponseBuilder;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -32,22 +27,23 @@ public class TheaterServiceImpl implements TheaterService
     private final TheatorMapper theatorMapper;
 
     @Override
-    public TheatorResponse addTheator(String email, TheatorRegistrationRequest theaterRegistrationRequest)
+    public TheatorResponse addTheator(String email, TheatorRequest theatorRequest)
     {
         if(userRepository.existsByEmail(email) && userRepository.findByEmail(email).getUserRole()== UserRole.THEATER_OWNER)
         {
             UserDetails details=userRepository.findByEmail(email);
-            Theater theater1 =copy(theaterRegistrationRequest, new Theater(),details);
+            Theater theater1 =copy(theatorRequest, new Theater(),details);
             return theatorMapper.theater(theater1);
         }
        throw new UserNotFoundException("user not Found by this email");
     }
-    private Theater copy(TheatorRegistrationRequest theatorRegistrationRequest,Theater theater,UserDetails userDetails)
+
+    private Theater copy(TheatorRequest theatorRequest,Theater theater,UserDetails userDetails)
     {
-        theater.setAddress(theatorRegistrationRequest.address());
-        theater.setCity(theatorRegistrationRequest.city());
-        theater.setName(theatorRegistrationRequest.name());
-        theater.setLandmark(theatorRegistrationRequest.landmark());
+        theater.setAddress(theatorRequest.address());
+        theater.setCity(theatorRequest.city());
+        theater.setName(theatorRequest.name());
+        theater.setLandmark(theatorRequest.landmark());
         theater.setTheaterOwner((TheaterOwner) userDetails);
         theatorRepository.save(theater);
         return theater;
@@ -71,5 +67,25 @@ public class TheaterServiceImpl implements TheaterService
             Theater theater1=theater.get();
             return theatorMapper.theatorResponseMapper(theater1);
         }
+    }
+
+    @Override
+    public TheatorResponse updateTheater(String theaterId, TheatorRequest registerationRequest) {
+        if(theatorRepository.existsById(theaterId)) {
+            Theater theater = theatorRepository.findById(theaterId).get();
+            theater = copy1(registerationRequest, theater);
+            return theatorMapper.theatorResponseMapper(theater);
+        }
+        throw new TheaterNotFoundByIdException("Theater not found by id");
+    }
+
+    private Theater copy1(TheatorRequest theatorRequest, Theater theater)
+    {
+        theater.setAddress(theatorRequest.address());
+        theater.setCity(theatorRequest.city());
+        theater.setName(theatorRequest.name());
+        theater.setLandmark(theatorRequest.landmark());
+        theatorRepository.save(theater);
+        return theater;
     }
 }

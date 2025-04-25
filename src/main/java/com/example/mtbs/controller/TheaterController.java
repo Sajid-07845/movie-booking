@@ -1,8 +1,7 @@
 package com.example.mtbs.controller;
 
-import com.example.mtbs.dto.TheatorRegistrationRequest;
+import com.example.mtbs.dto.TheatorRequest;
 import com.example.mtbs.dto.TheatorResponse;
-import com.example.mtbs.entity.Theater;
 import com.example.mtbs.service.TheaterService;
 import com.example.mtbs.utililty.ResponseStructure;
 import com.example.mtbs.utililty.RestResponseBuilder;
@@ -21,9 +20,9 @@ public class TheaterController
 
     @PostMapping("/theators")
     public ResponseEntity<ResponseStructure<TheatorResponse>> addTheater(
-            @Valid @RequestParam String email, @RequestBody TheatorRegistrationRequest theatorRegistrationRequest)
+            @Valid @RequestParam String email, @RequestBody TheatorRequest theatorRequest)
     {
-            TheatorResponse response =theaterService.addTheator(email, theatorRegistrationRequest);
+            TheatorResponse response =theaterService.addTheator(email, theatorRequest);
             return restResponseBuilder.success(HttpStatus.OK,"User added sucessfully",response);
     }
 
@@ -33,4 +32,12 @@ public class TheaterController
         TheatorResponse theaterResponse=theaterService.findTheaterById(theaterId);
         return restResponseBuilder.success(HttpStatus.FOUND,"Theator details found",theaterResponse);
     }
+
+    @PutMapping("/theaters/{theaterId}")
+    public ResponseEntity<ResponseStructure<TheatorResponse>> updateTheaterById(@PathVariable String theaterId, @Valid @RequestBody TheatorRequest theatorRequest )
+    {
+        TheatorResponse theatorResponse=theaterService.updateTheater(theaterId,theatorRequest);
+        return restResponseBuilder.success(HttpStatus.OK,"Theator Details Updated",theatorResponse);
+    }
+
 }
