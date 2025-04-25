@@ -37,4 +37,19 @@ public class TheatorMapper
                 theater1.getLandmark()
         );
     }
+
+//    public TheatorResponse updateTheatorMapper(Theater theater)
+//    {
+//        if(theater == null)
+//        {
+//            return null;
+//        }
+//        return new TheatorResponse(
+//                theater.getTheaterId(),
+//                theater.getName(),
+//                theater.getCity(),
+//                theater.getAddress(),
+//                theater.getLandmark()
+//        );
+//    }
 }
