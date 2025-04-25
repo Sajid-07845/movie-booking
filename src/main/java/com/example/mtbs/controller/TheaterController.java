@@ -10,10 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -28,5 +25,12 @@ public class TheaterController
     {
             TheatorResponse response =theaterService.addTheator(email, theatorRegistrationRequest);
             return restResponseBuilder.success(HttpStatus.OK,"User added sucessfully",response);
+    }
+
+    @GetMapping("/theators/{theaterId}")
+    public ResponseEntity<ResponseStructure<TheatorResponse>> findTheatorById(@PathVariable String theaterId)
+    {
+        TheatorResponse theaterResponse=theaterService.findTheaterById(theaterId);
+        return restResponseBuilder.success(HttpStatus.FOUND,"Theator details found",theaterResponse);
     }
 }

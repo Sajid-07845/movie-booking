@@ -22,4 +22,19 @@ public class TheatorMapper
                     theater1.getCity()
             );
     }
+
+    public TheatorResponse theatorResponseMapper(Theater theater1)
+    {
+        if(theater1==null)
+        {
+            return null;
+        }
+        return new TheatorResponse(
+                theater1.getTheaterId(),
+                theater1.getName(),
+                theater1.getCity(),
+                theater1.getAddress(),
+                theater1.getLandmark()
+        );
+    }
 }
