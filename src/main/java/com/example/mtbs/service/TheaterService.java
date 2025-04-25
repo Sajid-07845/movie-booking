@@ -9,4 +9,6 @@ public interface TheaterService
 {
 
     TheatorResponse addTheator(@Valid String email, TheatorRegistrationRequest theatorRegistrationRequest);
+
+    TheatorResponse findTheaterById(String theaterId);
 }

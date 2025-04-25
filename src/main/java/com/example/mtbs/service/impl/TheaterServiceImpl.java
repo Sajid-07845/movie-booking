@@ -6,6 +6,7 @@ import com.example.mtbs.entity.Theater;
 import com.example.mtbs.entity.TheaterOwner;
 import com.example.mtbs.entity.UserDetails;
 import com.example.mtbs.enums.UserRole;
+import com.example.mtbs.exception.TheaterNotFoundByIdException;
 import com.example.mtbs.exception.UserNotFoundException;
 import com.example.mtbs.mapper.TheatorMapper;
 import com.example.mtbs.repository.TheatorRepository;
@@ -19,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -39,7 +42,6 @@ public class TheaterServiceImpl implements TheaterService
         }
        throw new UserNotFoundException("user not Found by this email");
     }
-
     private Theater copy(TheatorRegistrationRequest theatorRegistrationRequest,Theater theater,UserDetails userDetails)
     {
         theater.setAddress(theatorRegistrationRequest.address());
@@ -49,5 +51,25 @@ public class TheaterServiceImpl implements TheaterService
         theater.setTheaterOwner((TheaterOwner) userDetails);
         theatorRepository.save(theater);
         return theater;
+    }
+
+    @Override
+    public TheatorResponse findTheaterById(String theaterId)
+    {
+        Optional<Theater> theater =theatorRepository.findById(theaterId);
+//        Theater theater1= theater.get();
+//        if(theater1 == null)
+//        {
+//            throw new TheaterNotFoundByIdException("No theator found with this id");
+//        }
+        if(theater.isEmpty())
+        {
+            throw new TheaterNotFoundByIdException("No theator found with this id");
+        }
+        else
+        {
+            Theater theater1=theater.get();
+            return theatorMapper.theatorResponseMapper(theater1);
+        }
     }
 }
