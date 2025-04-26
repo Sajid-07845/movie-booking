@@ -22,6 +22,7 @@ public class FieldErrorException extends ResponseEntityExceptionHandler
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request)
     {
 
+
        List<ObjectError> objectErrorList = ex.getAllErrors();
 
        List<CustomFieldError> customFieldErrors = new ArrayList<>();

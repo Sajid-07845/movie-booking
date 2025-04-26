@@ -1,39 +1,37 @@
 package com.example.mtbs.entity;
 
+import com.example.mtbs.enums.ScreenType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.List;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-@Setter
 @Getter
-public class Theater
+@Setter
+public class Screen
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String theaterId;
-    private String name;
-    private String address;
-    private String city;
-    private String landmark;
+    private String screeId;
+    @Enumerated(EnumType.STRING)
+    private ScreenType screenType;
+    private Integer capacity;
+    private Integer noOfRows;
 
-    @ManyToOne
-    private TheaterOwner theaterOwner;
     @CreatedDate
     private Instant createdAt;
     @LastModifiedDate
     private Instant updatedAt;
     private String createdBy;
 
-    @OneToMany(mappedBy = "theater")
-    private List<Screen> screen;
+    @ManyToOne
+    private Theater theater;
 
-
+    @OneToMany(mappedBy = "screen")
+    private List<Seat> seats;
 }
