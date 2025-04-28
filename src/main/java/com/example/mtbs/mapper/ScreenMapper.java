@@ -21,4 +21,5 @@ public class ScreenMapper
                 screen.getNoOfRows()
         );
     }
+
 }

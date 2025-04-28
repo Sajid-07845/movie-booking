@@ -25,4 +25,11 @@ public class ScreenController
             ScreenResponse screenResponse=screenService.addScreen(theaterId,screenRequest);
             return restResponseBuilder.success(HttpStatus.CREATED,"Screen added sucessfully",screenResponse);
     }
+
+    @GetMapping("/theaters/{theaterId}/screens/{screenId}")
+    public ResponseEntity<ResponseStructure<ScreenResponse>> findScreen(@PathVariable String theaterId,@PathVariable String screenId)
+    {
+        ScreenResponse screen=screenService.findScreen(theaterId,screenId);
+        return restResponseBuilder.success(HttpStatus.FOUND,"screen founded",screen);
+    }
 }
