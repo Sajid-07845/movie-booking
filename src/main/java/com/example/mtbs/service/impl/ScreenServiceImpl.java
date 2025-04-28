@@ -5,6 +5,7 @@ import com.example.mtbs.dto.ScreenResponse;
 import com.example.mtbs.entity.Screen;
 import com.example.mtbs.entity.Seat;
 import com.example.mtbs.entity.Theater;
+import com.example.mtbs.exception.ScreenNotFoundByIdException;
 import com.example.mtbs.exception.TheaterNotFoundByIdException;
 import com.example.mtbs.mapper.ScreenMapper;
 import com.example.mtbs.repository.ScreenRepository;
@@ -40,6 +41,7 @@ public class ScreenServiceImpl implements ScreenService
         return screenMapper.toResponseScreen(screen);
     }
 
+
     private Screen copy1(ScreenRequest screenRequest, Theater theater1, Screen screen)
     {
         screen.setScreenType(screenRequest.screenType());
@@ -62,5 +64,28 @@ public class ScreenServiceImpl implements ScreenService
                 seat.add(seats);
             }
             return seat;
+    }
+
+    @Override
+    public ScreenResponse findScreen(String theaterId, String screenId)
+    {
+       Optional<Theater> theater =theatorRepository.findById(theaterId);
+       if(theater.isEmpty())
+       {
+           throw new TheaterNotFoundByIdException("No theater Present by this Id");
+       }
+       else
+       {
+           Theater theater1=theater.get();
+           Optional<Screen> screen = screenRepository.findById(screenId);
+           if (screen.isEmpty()) {
+               throw new ScreenNotFoundByIdException("No Screen Found by that Id:");
+           }
+           else
+           {
+               Screen screen1=screen.get();
+               return screenMapper.toResponseScreen(screen1);
+           }
+       }
     }
 }
