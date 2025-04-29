@@ -21,10 +21,6 @@ public class Seat
     @Column(name = "seat_id",nullable = false,updatable = false)
     private String seatId;
 
-    @CreatedDate
-    private Instant createdAt;
-
-
     @Column(name = "created_at",updatable = false,nullable = false)
     @CreatedDate
     private Instant createdAt;
