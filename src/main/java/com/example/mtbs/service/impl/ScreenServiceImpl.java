@@ -14,7 +14,7 @@ import com.example.mtbs.repository.TheatorRepository;
 import com.example.mtbs.service.ScreenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -71,7 +71,7 @@ public class ScreenServiceImpl implements ScreenService
                 j=0;
                 row++;
             }
-        }
+ 
         return seats;
     }
 
