@@ -12,6 +12,7 @@ import com.example.mtbs.mapper.UserMapper;
 import com.example.mtbs.repository.UserRepository;
 import com.example.mtbs.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService
             default -> throw new IllegalArgumentException("Unsupported role: " + userRegistrationRequset.username());
         }
             UserDetails user = userMapper.toEntity(newUser, userRegistrationRequset);
+
             userRepository.save(user);
             return userMapper.toUserResponse(user);
     }

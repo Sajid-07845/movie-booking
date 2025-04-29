@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +19,7 @@ public class TheaterController
     private final TheaterService theaterService;
     private final RestResponseBuilder restResponseBuilder;
 
+    @PreAuthorize("hasAuthority('THEATER_OWNER')")
     @PostMapping("/theators")
     public ResponseEntity<ResponseStructure<TheatorResponse>> addTheater(
             @Valid @RequestParam String email, @RequestBody TheatorRequest theatorRequest)
@@ -33,7 +35,9 @@ public class TheaterController
         return restResponseBuilder.success(HttpStatus.FOUND,"Theator details found",theaterResponse);
     }
 
+
     @PutMapping("/theaters/{theaterId}")
+    @PreAuthorize("hasAuthority('THEATER_OWNER')")
     public ResponseEntity<ResponseStructure<TheatorResponse>> updateTheaterById(@PathVariable String theaterId, @Valid @RequestBody TheatorRequest theatorRequest )
     {
         TheatorResponse theatorResponse=theaterService.updateTheater(theaterId,theatorRequest);

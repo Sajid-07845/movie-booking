@@ -3,11 +3,16 @@ package com.example.mtbs.mapper;
 import com.example.mtbs.dto.UserRegistrationRequset;
 import com.example.mtbs.dto.UserResponse;
 import com.example.mtbs.entity.UserDetails;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class UserMapper
 {
+    private final PasswordEncoder passwordEncoder;
+
     public UserResponse toUserResponse(UserDetails userDetails)
     {
 
@@ -25,7 +30,7 @@ public class UserMapper
     {
         user.setUserRole(source.userRole());
         user.setEmail(source.email());
-        user.setPassword(source.password());
+        user.setPassword(passwordEncoder.encode(source.password()));
         user.setDateOfBirth(source.dateOfBirth());
         user.setPhoneNumber(source.phoneNumber());
         user.setUsername(source.username());
