@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,15 +56,21 @@ public class ScreenServiceImpl implements ScreenService
 
     private List<Seat> createSeats(Screen screen, Integer capacity)
     {
-            List<Seat> seat = new ArrayList<>();
-            for(int i=1;i<=capacity;i++)
+        List<Seat> seat = new LinkedList<>();
+        int noOfRows = screen.getCapacity() / screen.getNoOfRows();
+        for (int i = 65; i <= 65 + screen.getNoOfRows(); i++)
+        {
+            char row = (char) i;
+            for (int j = 1; i <= noOfRows; j++)
             {
                 Seat seats = new Seat();
                 seats.setScreen(screen);
                 seatRepository.save(seats);
                 seat.add(seats);
             }
-            return seat;
+        }
+
+        return seat;
     }
 
     @Override
