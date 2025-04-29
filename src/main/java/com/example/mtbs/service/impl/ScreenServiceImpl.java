@@ -15,7 +15,7 @@ import com.example.mtbs.service.ScreenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,15 +55,24 @@ public class ScreenServiceImpl implements ScreenService
 
     private List<Seat> createSeats(Screen screen, Integer capacity)
     {
-            List<Seat> seat = new ArrayList<>();
-            for(int i=1;i<=capacity;i++)
+        List<Seat> seats = new LinkedList<>();
+        int noOfRowsPerSeat = screen.getCapacity() / screen.getNoOfRows();
+        char row ='A';
+        for(int i=1,j=1;i<=capacity;i++,j++)
+        {
+            Seat seat = new Seat();
+            seat.setScreen(screen);
+            seat.setIsDelete(false);
+            seat.setName(row+" "+j);
+            seatRepository.save(seat);
+            seats.add(seat);
+            if (j == noOfRowsPerSeat)
             {
-                Seat seats = new Seat();
-                seats.setScreen(screen);
-                seatRepository.save(seats);
-                seat.add(seats);
+                j=0;
+                row++;
             }
-            return seat;
+        }
+        return seats;
     }
 
     @Override
