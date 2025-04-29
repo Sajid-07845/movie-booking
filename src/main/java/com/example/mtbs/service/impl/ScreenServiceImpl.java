@@ -14,7 +14,6 @@ import com.example.mtbs.repository.TheatorRepository;
 import com.example.mtbs.service.ScreenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -56,21 +55,24 @@ public class ScreenServiceImpl implements ScreenService
 
     private List<Seat> createSeats(Screen screen, Integer capacity)
     {
-        List<Seat> seat = new LinkedList<>();
-        int noOfRows = screen.getCapacity() / screen.getNoOfRows();
-        for (int i = 65; i <= 65 + screen.getNoOfRows(); i++)
+        List<Seat> seats = new LinkedList<>();
+        int noOfRowsPerSeat = screen.getCapacity() / screen.getNoOfRows();
+        char row ='A';
+        for(int i=1,j=1;i<=capacity;i++,j++)
         {
-            char row = (char) i;
-            for (int j = 1; i <= noOfRows; j++)
+            Seat seat = new Seat();
+            seat.setScreen(screen);
+            seat.setIsDelete(false);
+            seat.setName(row+" "+j);
+            seatRepository.save(seat);
+            seats.add(seat);
+            if (j == noOfRowsPerSeat)
             {
-                Seat seats = new Seat();
-                seats.setScreen(screen);
-                seatRepository.save(seats);
-                seat.add(seats);
+                j=0;
+                row++;
             }
-        }
-
-        return seat;
+ 
+        return seats;
     }
 
     @Override
