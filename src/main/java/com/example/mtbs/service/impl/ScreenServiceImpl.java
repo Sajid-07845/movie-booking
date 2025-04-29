@@ -53,25 +53,23 @@ public class ScreenServiceImpl implements ScreenService
         return screen;
     }
 
-    private List<Seat> createSeats(Screen screen, Integer capacity)
-    {
+    private List<Seat> createSeats(Screen screen, Integer capacity) {
         List<Seat> seats = new LinkedList<>();
         int noOfRowsPerSeat = screen.getCapacity() / screen.getNoOfRows();
-        char row ='A';
-        for(int i=1,j=1;i<=capacity;i++,j++)
-        {
+        char row = 'A';
+        for (int i = 1, j = 1; i <= capacity; i++, j++) {
             Seat seat = new Seat();
             seat.setScreen(screen);
             seat.setIsDelete(false);
-            seat.setName(row+" "+j);
+            seat.setName(row + " " + j);
             seatRepository.save(seat);
             seats.add(seat);
             if (j == noOfRowsPerSeat)
             {
-                j=0;
+                j = 0;
                 row++;
             }
- 
+        }
         return seats;
     }
 
