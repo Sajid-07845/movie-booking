@@ -54,5 +54,8 @@ public class Theater
     @OneToMany(mappedBy = "theater")
     private List<Screen> screen;
 
+//    @OneToMany(mappedBy = "theaters")
+//    private List<Show> shows;
+
 
 }
