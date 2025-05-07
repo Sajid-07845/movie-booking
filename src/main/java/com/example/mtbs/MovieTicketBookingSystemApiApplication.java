@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing(auditorAwareRef = "auditorAwareImpl")
 public class MovieTicketBookingSystemApiApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		SpringApplication.run(MovieTicketBookingSystemApiApplication.class, args);
 	}
 
