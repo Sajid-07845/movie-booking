@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,6 +33,7 @@ public class Movie {
     @ElementCollection
     private Set<String> castList;
 
+
     @Column(name = "runtime")
     private Duration runtime;
 
@@ -42,6 +44,9 @@ public class Movie {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "genre")
     private Genre genre;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Show> shows;
 
 
 }
