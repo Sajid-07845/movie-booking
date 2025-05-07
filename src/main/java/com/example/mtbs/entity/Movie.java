@@ -48,5 +48,8 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Show> shows;
 
+    @OneToMany(mappedBy = "movies")
+    private List<Feedback> feedbacks;
+
 
 }
